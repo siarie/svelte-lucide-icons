@@ -1,0 +1,39 @@
+{
+  "name": "svelte-lucide-icons",
+  "version": "0.1.0",
+  "license": "ISC",
+  "description": "Lucide icon as Svelte components",
+  "author": {
+    "name": "Sri Aspari",
+    "email": "mail@siarie.me",
+    "url": "https://github.com/siarie"
+  },
+  "svelte": "./index.js",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build"
+  },
+  "devDependencies": {
+    "svelte": "^3.43.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/siarie/lucide-icons-svelte.git"
+  },
+  "homepage": "https://github.com/siarie/lucide-icons-svelte",
+  "bugs": "https://github.com/siarie/lucide-icons-svelte/issues",
+  "keywords": [
+    "svelte",
+    "svelte component",
+    "icon",
+    "svg",
+    "lucide"
+  ],
+  "files": [
+    "icons",
+    "index.js",
+    "index.d.ts"
+  ]
+}
