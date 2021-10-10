@@ -20,10 +20,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/siarie/lucide-icons-svelte.git"
+    "url": "https://github.com/siarie/svelte-lucide-icons.git"
   },
-  "homepage": "https://github.com/siarie/lucide-icons-svelte",
-  "bugs": "https://github.com/siarie/lucide-icons-svelte/issues",
+  "homepage": "https://github.com/siarie/svelte-lucide-icons#readme",
+  "bugs": "https://github.com/siarie/svelte-lucide-icons/issues",
   "keywords": [
     "svelte",
     "svelte component",
