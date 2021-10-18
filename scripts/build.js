@@ -1,43 +1,45 @@
 #!/usr/bin/env node
-import path from 'path'
-import fs from 'fs'
-import { fileURLToPath } from 'url'
+import path from "path";
+import fs from "fs";
+import { fileURLToPath } from "url";
 
-import { parse, walk } from 'svelte/compiler'
+import { parse, walk } from "svelte/compiler";
 
 const __filename = fileURLToPath(import.meta.url);
 
-const WOKRSPACE = path.dirname(path.dirname(__filename))
+const WORKSPACE = path.dirname(path.dirname(__filename));
 const CONFIG = {
-  srcDir: path.join(WOKRSPACE, 'lucide/icons'),
-  outDir: path.join(WOKRSPACE, 'icons')
-}
+  srcDir: path.join(WORKSPACE, "lucide/icons"),
+  outDir: path.join(WORKSPACE, "icons"),
+};
 
 const toModuleName = (str) => {
-  return str.replace(/\.svg$/g, '').replace(/(?:^|-)([a-zA-Z0-9])/g, (matches, $1) => {
-    return $1.toUpperCase()
-  })
-}
+  return str
+    .replace(/\.svg$/g, "")
+    .replace(/(?:^|-)([a-zA-Z0-9])/g, (matches, $1) => {
+      return $1.toUpperCase();
+    });
+};
 
 /**
  * Svelte component template.
- * 
- * @param {string} svg 
- * @returns 
+ *
+ * @param {string} svg
+ * @returns
  */
 const svelteTemplate = (svg) => {
-  let children = ''
-  const ast = parse(svg)
+  let children = "";
+  const ast = parse(svg);
 
   walk(ast.html, {
     enter(node) {
-      if (node.type === "Element" && node.name === 'svg') {
-        node.children.forEach(child => {
-          children += svg.slice(child.start, child.end)
-        })
+      if (node.type === "Element" && node.name === "svg") {
+        node.children.forEach((child) => {
+          children += svg.slice(child.start, child.end);
+        });
       }
-    }
-  })
+    },
+  });
 
   return `<script>
   export let size = 24
@@ -56,12 +58,12 @@ const svelteTemplate = (svg) => {
 >
   <slot />
   ${children.trim()}
-</svg>`
-}
+</svg>`;
+};
 
 /**
  * Typescript definition template.
- * 
+ *
  * @param {string} moduleName module name in PascalCase
  * @returns
  */
@@ -90,30 +92,41 @@ export default class ${moduleName} extends SvelteComponentTyped<
   {},
   { default: {} }
 > {}
-`
+`;
 
 try {
-  fs.statSync(CONFIG.srcDir)
+  fs.statSync(CONFIG.srcDir);
 } catch (err) {
-  console.error(err)
-  process.exit(1)
+  console.error(err);
+  process.exit(1);
 }
 
-fs.rmSync(CONFIG.outDir, { recursive: true, force: true })
-fs.mkdirSync(CONFIG.outDir)
+fs.rmSync(CONFIG.outDir, { recursive: true, force: true });
+fs.mkdirSync(CONFIG.outDir);
 
-const files = fs.readdirSync(CONFIG.srcDir)
+const files = fs.readdirSync(CONFIG.srcDir);
 files.forEach((file, i) => {
-  const svg = fs.readFileSync(path.join(CONFIG.srcDir, file), 'utf-8')
-  const svelteComponent = svelteTemplate(svg, file)
+  const svg = fs.readFileSync(path.join(CONFIG.srcDir, file), "utf-8");
+  const svelteComponent = svelteTemplate(svg, file);
 
-  fs.writeFileSync(path.join(CONFIG.outDir, `${toModuleName(file)}.svelte`), svelteComponent)
-  fs.writeFileSync(path.join(CONFIG.outDir, `${toModuleName(file)}.svelte.d.ts`), tsTemplate(toModuleName(file)))
-})
+  fs.writeFileSync(
+    path.join(CONFIG.outDir, `${toModuleName(file)}.svelte`),
+    svelteComponent
+  );
+  fs.writeFileSync(
+    path.join(CONFIG.outDir, `${toModuleName(file)}.svelte.d.ts`),
+    tsTemplate(toModuleName(file))
+  );
+});
 
 const index = files
-  .map(file => `export { default as ${toModuleName(file)} } from './icons/${toModuleName(file)}.svelte';\n`)
-  .join('')
+  .map(
+    (file) =>
+      `export { default as ${toModuleName(file)} } from './icons/${toModuleName(
+        file
+      )}.svelte';\n`
+  )
+  .join("");
 
-fs.writeFileSync(path.join(WOKRSPACE, 'index.js'), index)
-fs.writeFileSync(path.join(WOKRSPACE, 'index.d.ts'), index)
+fs.writeFileSync(path.join(WORKSPACE, "index.js"), index);
+fs.writeFileSync(path.join(WORKSPACE, "index.d.ts"), index);
