@@ -1,6 +1,10 @@
 name: Publish Package
 
-on: workflow_dispatch
+on: 
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v.*'
 
 jobs:
   build:
