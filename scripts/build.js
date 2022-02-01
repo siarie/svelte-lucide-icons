@@ -71,28 +71,39 @@ const tsTemplate = (moduleName) => `/// <reference types="svelte" />
 import { SvelteComponentTyped } from 'svelte'
 
 export interface ${moduleName}Props extends svelte.JSX.HTMLAttributes<HTMLElementTagNameMap["svg"]> {
-  xmlns?: 'http://www.w3.org/2000/svg',
-  width?: 24,
-  height?: 24,
-  viewBox?: '0 0 24 24',
-  fill?: 'none',
-  stroke?: 'currentColor',
-  'stroke-width'?: 2,
-  'stroke-linecap'?: 'round',
-  'stroke-linejoin'?: 'round',
-
-  /**
-   * Icon size
-   */
-  size?: 24
+  xmlns?: string,
+  width?: number | string,
+  height?: number | string,
+  viewBox?: string,
+  fill?: string,
+  stroke?: string,
+  'stroke-width'?: number | string,
+  'stroke-linecap'?: string,
+  'stroke-linejoin'?: string,
+  size?: number,
 }
 
 export default class ${moduleName} extends SvelteComponentTyped<
   ${moduleName}Props,
   {},
-  { default: {} }
+  { default: {
+    xmlns: 'http://www.w3.org/2000/svg',
+    width: 24,
+    height: 24,
+    viewBox: '0 0 24 24',
+    fill: 'none',
+    stroke: 'currentColor',
+    'stroke-width': 2,
+    'stroke-linecap': 'round',
+    'stroke-linejoin': 'round',
+
+    /**
+     * Icon size
+     */
+    size: 24
+  } }
 > {}
-`;
+`
 
 try {
   fs.statSync(CONFIG.srcDir);
