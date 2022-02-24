@@ -1,5 +1,8 @@
 # svelte-lucide-icons
 
+[![npm version](https://badge.fury.io/js/svelte-lucide-icons.svg)](https://badge.fury.io/js/svelte-lucide-icons)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/siarie/svelte-lucide-icons/Publish%20Package)
+
 Svelte Package for [Lucide Icons][lucide-icons]
 
 [lucide-icons]: https://github.com/lucide-icons/lucide
